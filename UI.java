@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 
 public class UI implements ActionListener{
 
+    private double operand1 = 0;
+    private double operand2 = 0;
+    private String operator = "";
+
     JTextField textField;
     JFrame frame;
     JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, badd, bsub, bmult, bdiv, beq, bdec, bdel, bclr;
@@ -153,6 +157,7 @@ public class UI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         if(e.getSource() == b0)
         {
             textField.setText(textField.getText().concat("0"));
@@ -161,7 +166,7 @@ public class UI implements ActionListener{
         {
             textField.setText(textField.getText().concat("1"));
         }
-        if(e.getSource() == b2)
+        if(e.getSource() == b1)
         {
             textField.setText(textField.getText().concat("2"));
         }
@@ -193,6 +198,37 @@ public class UI implements ActionListener{
         {
             textField.setText(textField.getText().concat("9"));
         }
-        if(e.get)
+        if(e.getSource() == bdec)
+        {
+            textField.setText(textField.getText().concat("."));
+        }
+        if (e.getSource() == badd) {
+        // Handle addition operator
+        operator = "+";
+        operand1 = Double.parseDouble(textField.getText());
+        textField.setText("");
+        }
+        if (e.getSource() == bsub) {
+            // Handle subtraction operator
+            operator = "-";
+            operand1 = Double.parseDouble(textField.getText());
+            textField.setText("");
+        }
+        if (e.getSource() == bmult) {
+            // Handle multiplication operator
+            operator = "*";
+            operand1 = Double.parseDouble(textField.getText());
+            textField.setText("");
+        }
+        if (e.getSource() == bdiv) {
+            // Handle division operator
+            operator = "/";
+            operand1 = Double.parseDouble(textField.getText());
+            textField.setText("");
+        }
+
     }
+
+
+
 }
