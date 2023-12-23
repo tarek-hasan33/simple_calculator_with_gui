@@ -5,9 +5,10 @@ import java.awt.event.ActionListener;
 
 public class UI implements ActionListener{
 
-    private double operand1 = 0;
-    private double operand2 = 0;
-    private String operator = "";
+    //private double operand1 = 0;
+    //private double operand2 = 0;
+    //private String operator = "";
+    private Calculator calculator;
 
     JTextField textField;
     JFrame frame;
@@ -21,6 +22,7 @@ public class UI implements ActionListener{
         frame.setLayout(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        calculator = new Calculator();
         
         //For Font
         Font font = new Font("Arial", Font.BOLD, 20);
@@ -30,6 +32,7 @@ public class UI implements ActionListener{
         textField.setFont(font);
         textField.setBackground(Color.WHITE);
         textField.setBounds(5, 5, 265, 50);
+        textField.setEditable(false); 
         frame.add(textField);
 
 
@@ -157,50 +160,47 @@ public class UI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-    if (e.getSource() == bclr)
-    {
-        textField.setText("");
-    }
-    if (e.getSource() == bdel)
-    {
-        String text = textField.getText();
-        textField.setText("");
-        for(int i=0; i<text.length()-1; i++)
-        {
-            textField.setText(textField.getText()+text.charAt(i));
+        if (e.getSource() == bclr) {
+            textField.setText("");
+        }
+        if (e.getSource() == bdel) {
+            String text = textField.getText();
+            textField.setText("");
+            for (int i = 0; i < text.length() - 1; i++) {
+                textField.setText(textField.getText() + text.charAt(i));
+            }
+        }
+        if (e.getSource() == b0 || e.getSource() == b1 || e.getSource() == b2 ||
+            e.getSource() == b3 || e.getSource() == b4 || e.getSource() == b5 ||
+            e.getSource() == b6 || e.getSource() == b7 || e.getSource() == b8 ||
+            e.getSource() == b9 || e.getSource() == bdec) {
+            textField.setText(textField.getText().concat(((JButton) e.getSource()).getText()));
         }
 
-    }
-    if (e.getSource() == b0 || e.getSource() == b1 || e.getSource() == b2 ||
-        e.getSource() == b3 || e.getSource() == b4 || e.getSource() == b5 ||
-        e.getSource() == b6 || e.getSource() == b7 || e.getSource() == b8 ||
-        e.getSource() == b9 || e.getSource() == bdec) {
-        // Handle numeric and decimal buttons
-        textField.setText(textField.getText().concat(((JButton) e.getSource()).getText()));
-    }
-
-    if (e.getSource() == badd || e.getSource() == bsub ||
-        e.getSource() == bmult || e.getSource() == bdiv) {
-        // Handle operator buttons
-        if (!textField.getText().isEmpty()) {
-            operator = ((JButton) e.getSource()).getText();
-            operand1 = Double.parseDouble(textField.getText());
-            textField.setText(textField.getText() + " " + operator + " ");  // Display the operator
+        if (e.getSource() == badd || e.getSource() == bsub ||
+            e.getSource() == bmult || e.getSource() == bdiv) {
+            if (!textField.getText().isEmpty()) {
+                calculator.setOperand1(Double.parseDouble(textField.getText()));
+                calculator.setOperator(((JButton) e.getSource()).getText());
+                textField.setText(textField.getText() + " " + calculator.getOperator() + " ");
+            }
         }
-    } 
 
-    if (e.getSource() == beq) {
-        // Handle equals button
-        if (!textField.getText().isEmpty()) {
-            String[] tokens = textField.getText().split(" ");
-            if (tokens.length == 3) {
-                operand2 = Double.parseDouble(tokens[2]);
-                textField.setText(textField.getText() + " = ");
+        if (e.getSource() == beq) {
+            if (!textField.getText().isEmpty()) {
+                String[] tokens = textField.getText().split(" ");
+                if (tokens.length == 3) {
+                    calculator.setOperand2(Double.parseDouble(tokens[2]));
+                    try {
+                        double result = calculator.performCalculation();
+                        textField.setText(textField.getText() + " = " + result);
+                    } catch (ArithmeticException ex) {
+                        textField.setText(ex.getMessage());
+                    }
+                }
             }
         }
     }
-}
 
 
 
