@@ -154,10 +154,7 @@ public class UI implements ActionListener{
     }
 
     
-    //Main Method
-    public static void main(String[] args) {
-        new UI();
-    }
+    
 
 
     //Action Listener Method
@@ -211,5 +208,10 @@ public class UI implements ActionListener{
                 }
             }
         }
+    }
+    
+    //Main Method
+    public static void main(String[] args) {
+        new UI();
     }
 }
