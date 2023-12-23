@@ -1,8 +1,11 @@
 public class Calculator {
+
+    //Variables
     private double operand1 = 0;
     private double operand2 = 0;
     private String operator = "";
 
+    //Setter Getters
     public void setOperand1(double operand1) {
         this.operand1 = operand1;
     }
@@ -18,6 +21,8 @@ public class Calculator {
         return operator;
     }
 
+
+    //Main Calculation Happens Here
     public double performCalculation() throws ArithmeticException {
         double result = 0;
 
@@ -33,8 +38,6 @@ public class Calculator {
             } else {
                 throw new ArithmeticException("Undefined");
             }
-        } else {
-            throw new IllegalArgumentException("Invalid operator");
         }
 
         return result;

@@ -5,11 +5,10 @@ import java.awt.event.ActionListener;
 
 public class UI implements ActionListener{
 
-    //private double operand1 = 0;
-    //private double operand2 = 0;
-    //private String operator = "";
+    //Declaring Instance Variable of Calculator Class
     private Calculator calculator;
 
+    //Declaring Textfield, Frame and Buttons
     JTextField textField;
     JFrame frame;
     JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, badd, bsub, bmult, bdiv, beq, bdec, bdel, bclr;
@@ -38,7 +37,7 @@ public class UI implements ActionListener{
 
         
         
-        
+        //Declaring Buttons
         b0 = new JButton("0");
         b0.setFont(font);
         b1 = new JButton("1");
@@ -75,7 +74,7 @@ public class UI implements ActionListener{
         bdel.setFont(font);
         bclr = new JButton("C");
         bclr.setFont(font);
-    //
+    
 
         //First Row
         bdel.setBounds(203, 70, 65, 50);
@@ -106,10 +105,7 @@ public class UI implements ActionListener{
         bdec.setBounds(8, 270, 65, 50);
 
 
-
-        
-
-
+        //Adding Buttons to the Frame
         frame.add(b0);
         frame.add(b1);
         frame.add(b2);
@@ -130,6 +126,7 @@ public class UI implements ActionListener{
         frame.add(bclr);
 
         
+        //Adding Action Listener To the Buttons
         b0.addActionListener(this);
         b1.addActionListener(this);
         b2.addActionListener(this);
@@ -150,19 +147,29 @@ public class UI implements ActionListener{
         bclr.addActionListener(this);
     
 
+        //Setting Icon for The Calculator App
         ImageIcon image = new ImageIcon("calculator.png");
         frame.setIconImage(image.getImage());
         frame.setVisible(true);
     }
+
+    
+    //Main Method
     public static void main(String[] args) {
         new UI();
     }
 
+
+    //Action Listener Method
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        //For Clear Button
         if (e.getSource() == bclr) {
             textField.setText("");
         }
+
+        //For Delete Button
         if (e.getSource() == bdel) {
             String text = textField.getText();
             textField.setText("");
@@ -170,6 +177,8 @@ public class UI implements ActionListener{
                 textField.setText(textField.getText() + text.charAt(i));
             }
         }
+
+        //To Record input of the Digits and Decimal Button Input
         if (e.getSource() == b0 || e.getSource() == b1 || e.getSource() == b2 ||
             e.getSource() == b3 || e.getSource() == b4 || e.getSource() == b5 ||
             e.getSource() == b6 || e.getSource() == b7 || e.getSource() == b8 ||
@@ -177,6 +186,7 @@ public class UI implements ActionListener{
             textField.setText(textField.getText().concat(((JButton) e.getSource()).getText()));
         }
 
+        //To Record the Operator Button Input
         if (e.getSource() == badd || e.getSource() == bsub ||
             e.getSource() == bmult || e.getSource() == bdiv) {
             if (!textField.getText().isEmpty()) {
@@ -186,11 +196,12 @@ public class UI implements ActionListener{
             }
         }
 
+        //Things to do After Pressing Equal Button
         if (e.getSource() == beq) {
             if (!textField.getText().isEmpty()) {
-                String[] tokens = textField.getText().split(" ");
-                if (tokens.length == 3) {
-                    calculator.setOperand2(Double.parseDouble(tokens[2]));
+                String[] element = textField.getText().split(" ");
+                if (element.length == 3) {
+                    calculator.setOperand2(Double.parseDouble(element[2]));
                     try {
                         double result = calculator.performCalculation();
                         textField.setText(textField.getText() + " = " + result);
@@ -201,8 +212,4 @@ public class UI implements ActionListener{
             }
         }
     }
-
-
-
-
 }
