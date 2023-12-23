@@ -157,77 +157,51 @@ public class UI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if(e.getSource() == b0)
-        {
-            textField.setText(textField.getText().concat("0"));
-        }
-        if(e.getSource() == b1)
-        {
-            textField.setText(textField.getText().concat("1"));
-        }
-        if(e.getSource() == b1)
-        {
-            textField.setText(textField.getText().concat("2"));
-        }
-        if(e.getSource() == b3)
-        {
-            textField.setText(textField.getText().concat("3"));
-        }
-        if(e.getSource() == b4)
-        {
-            textField.setText(textField.getText().concat("4"));
-        }
-        if(e.getSource() == b5)
-        {
-            textField.setText(textField.getText().concat("5"));
-        }
-        if(e.getSource() == b6)
-        {
-            textField.setText(textField.getText().concat("6"));
-        }
-        if(e.getSource() == b7)
-        {
-            textField.setText(textField.getText().concat("7"));
-        }
-        if(e.getSource() == b8)
-        {
-            textField.setText(textField.getText().concat("8"));
-        }
-        if(e.getSource() == b9)
-        {
-            textField.setText(textField.getText().concat("9"));
-        }
-        if(e.getSource() == bdec)
-        {
-            textField.setText(textField.getText().concat("."));
-        }
-        if (e.getSource() == badd) {
-        // Handle addition operator
-        operator = "+";
-        operand1 = Double.parseDouble(textField.getText());
+
+    if (e.getSource() == bclr)
+    {
         textField.setText("");
-        }
-        if (e.getSource() == bsub) {
-            // Handle subtraction operator
-            operator = "-";
-            operand1 = Double.parseDouble(textField.getText());
-            textField.setText("");
-        }
-        if (e.getSource() == bmult) {
-            // Handle multiplication operator
-            operator = "*";
-            operand1 = Double.parseDouble(textField.getText());
-            textField.setText("");
-        }
-        if (e.getSource() == bdiv) {
-            // Handle division operator
-            operator = "/";
-            operand1 = Double.parseDouble(textField.getText());
-            textField.setText("");
+    }
+    if (e.getSource() == bdel)
+    {
+        String text = textField.getText();
+        textField.setText("");
+        for(int i=0; i<text.length()-1; i++)
+        {
+            textField.setText(textField.getText()+text.charAt(i));
         }
 
     }
+    if (e.getSource() == b0 || e.getSource() == b1 || e.getSource() == b2 ||
+        e.getSource() == b3 || e.getSource() == b4 || e.getSource() == b5 ||
+        e.getSource() == b6 || e.getSource() == b7 || e.getSource() == b8 ||
+        e.getSource() == b9 || e.getSource() == bdec) {
+        // Handle numeric and decimal buttons
+        textField.setText(textField.getText().concat(((JButton) e.getSource()).getText()));
+    }
+
+    if (e.getSource() == badd || e.getSource() == bsub ||
+        e.getSource() == bmult || e.getSource() == bdiv) {
+        // Handle operator buttons
+        if (!textField.getText().isEmpty()) {
+            operator = ((JButton) e.getSource()).getText();
+            operand1 = Double.parseDouble(textField.getText());
+            textField.setText(textField.getText() + " " + operator + " ");  // Display the operator
+        }
+    } 
+
+    if (e.getSource() == beq) {
+        // Handle equals button
+        if (!textField.getText().isEmpty()) {
+            String[] tokens = textField.getText().split(" ");
+            if (tokens.length == 3) {
+                operand2 = Double.parseDouble(tokens[2]);
+                textField.setText(textField.getText() + " = ");
+            }
+        }
+    }
+}
+
 
 
 
